@@ -6,25 +6,76 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Memory Game by Peter Kaukov</title>
 
-  <link rel="stylesheet" href="/css/main.css">
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet prefetch">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <header>
-    <h1>Game Name</h1>
-    <span>Scores</span>
-    <span>Controls - Reset, Stop/Quit/Give up</span>
-  </header>
+  <div class="container">
+    <header class="page-header">
+      <h1 class="game-title">Game Name</h1>
 
-  <main>
-    <div class="main-board">
-      Main Board
-    </div>
-  </main>
+      <section class="player-score">
+        <div class="stars">
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+        </div>
 
-  <footer>
-    Footer Links | Copyright &copy; 2018 Peter Kaukov &lt;<a href="mailto:peter.kaukov@gmail.com">peter.kaukov@gmail.com&gt;
-  </footer>
+        <div class="player-moves">
+          <span class="moves">0</span> Moves
+        </div>
+      </section>
 
-  <script src="/js/main.js"></script>
+      <section class="game-controls">
+        <span class="fa fa-redo"></span>
+        <span class="fa fa-pause"></span>
+        <span class="fa fa-ban"></span>
+      </section>
+    </header>
+
+    <main class="page-content">
+      <section class="main-board">
+        <span class="board-tile"><span class="fa fa-band-aid"></span></span>
+
+        <span class="board-tile"><span class="fa fa-anchor"></span></span>
+
+        <span class="board-tile"><span class="fa fa-balance-scale"></span></span>
+
+        <span class="board-tile"><span class="fa fa-arrow-down"></span></span>
+
+        <span class="board-tile"><span class="fa fa-eye"></span></span>
+
+        <span class="board-tile"><span class="fa fa-bolt"></span></span>
+
+        <span class="board-tile"><span class="fa fa-gem"></span></span>
+
+        <span class="board-tile closed"><span class="fa fa-bolt"></span></span>
+
+        <span class="board-tile"><span class="fa fa-basketball-ball"></span></span>
+
+        <span class="board-tile"><span class="fa fa-band-aid"></span></span>
+
+        <span class="board-tile"><span class="fa fa-gem"></span></span>
+
+        <span class="board-tile"><span class="fa fa-balance-scale"></span></span>
+
+        <span class="board-tile"><span class="fa fa-eye"></span></span>
+
+        <span class="board-tile closed"><span class="fa fa-anchor"></span></span>
+
+        <span class="board-tile"><span class="fa fa-arrow-down"></span></span>
+
+        <span class="board-tile"><span class="fa fa-basketball-ball"></span></span>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <span class="copyright-text">
+        Copyright &copy; 2018 Peter Kaukov &lt;<a href="mailto:peter.kaukov@gmail.com">peter.kaukov@gmail.com</a>&gt;
+      </span>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
