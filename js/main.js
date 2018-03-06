@@ -1,5 +1,6 @@
 const boardTiles = document.querySelectorAll('.board-tile');
 const mainBoard = document.querySelector('.main-board');
+const movesCounter = document.querySelector('.moves');
 
 const tileIcons = [
   `fa-band-aid`,
@@ -18,9 +19,9 @@ let openTiles = [];
 let correctTiles = 0; // for future score and tile counting
 let score = 0; // for future score counting
 let stars = 3; // for future star counting
-let moves = 0; // for future moves counting
+let moves = 0;
 
-function initializeBoard() {
+function resetBoard() {
   // reset all scores and board tile states
   boardTiles.forEach(function (tile) {
     if (!tile.classList.contains('closed')) {
@@ -29,9 +30,16 @@ function initializeBoard() {
   });
 }
 
-function fillTiles() {
+function increaseMoves() {
+  moves++;
+  movesCounter.innerText = moves;
+}
+
+function initializeGame() {
   const insertedIcons = {};
   const icons = tileIcons;
+
+  movesCounter.innerText = moves;
 
   boardTiles.forEach(function (tile) {
     const numberOfIcons = icons.length > 1 ? icons.length - 1 : 0;
@@ -66,6 +74,8 @@ mainBoard.addEventListener('click', function (e) {
       let firstTileName = openTiles[0].firstElementChild.classList[1];
       let secondTileName = openTiles[1].firstElementChild.classList[1];
 
+      increaseMoves();
+
       if (firstTileName === secondTileName) {
         console.log('Tiles match. Congratulations!');
         openTiles = [];
@@ -86,10 +96,11 @@ mainBoard.addEventListener('click', function (e) {
   }
 });
 
-fillTiles();
+initializeGame();
 
 /*
  * TODO:
  * Make a function which renders all board tiles, adds an icon and shuffles them
  * Add dynamic board size selection (bonus)
+ * Maybe levels ?! (bonus)
  */
