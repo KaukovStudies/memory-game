@@ -1,6 +1,7 @@
 const boardTiles = document.querySelectorAll('.board-tile');
 const mainBoard = document.querySelector('.main-board');
 const movesCounter = document.querySelector('.moves');
+const playerScore = document.querySelector('.player-score');
 
 const tileIcons = [
   `fa-band-aid`,
@@ -16,7 +17,7 @@ const tileIcons = [
 let openTilesCount = 0;
 let openTiles = [];
 
-let correctTiles = 0; // for future score and tile counting
+let correctTiles = 0;
 let score = 0; // for future score counting
 let stars = 3; // for future star counting
 let moves = 0;
@@ -78,6 +79,14 @@ mainBoard.addEventListener('click', function (e) {
 
       if (firstTileName === secondTileName) {
         console.log('Tiles match. Congratulations!');
+
+        correctTiles++;
+
+        if (correctTiles === boardTiles.length / 2) {
+          console.log(`You win the game! It took you ${moves} moves`);
+          playerScore.innerText = `You win the game! It took you ${moves} moves`;
+        }
+
         openTiles = [];
         openTilesCount = 0;
       } else {
