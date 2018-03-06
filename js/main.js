@@ -12,6 +12,14 @@ const tileIcons = [
   `fa-basketball-ball`
 ];
 
+let openTilesCount = 0;
+let openTiles = [];
+
+let correctTiles = 0; // for future score and tile counting
+let score = 0; // for future score counting
+let stars = 3; // for future star counting
+let moves = 0; // for future moves counting
+
 function initializeBoard() {
   // reset all scores and board tile states
   boardTiles.forEach(function (tile) {
@@ -40,22 +48,41 @@ function fillTiles() {
     }
 
     tile.appendChild(newTileIcon);
+    tile.classList.toggle('closed');
   });
 }
 
-
-
 mainBoard.addEventListener('click', function (e) {
-  // TODO:
-  // If a tile is open, don't allow closing it until another is opened
-  // and they are checked for matching tiles
-
-  if (e.target.classList.contains('fa')) {
-    // if a player clicks on the icon, don't toggle the class on the icon,
-    // but on its parent - the board tile
-    e.target.parentElement.classList.toggle('closed');
-  } else {
+  if ( (e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) ) {
     e.target.classList.toggle('closed');
+
+    openTiles.push(e.target);
+
+    let tileIcon = e.target.firstElementChild.classList[1];
+
+    openTilesCount++;
+
+    if (openTilesCount === 2) {
+      let firstTileName = openTiles[0].firstElementChild.classList[1];
+      let secondTileName = openTiles[1].firstElementChild.classList[1];
+
+      if (firstTileName === secondTileName) {
+        console.log('Tiles match. Congratulations!');
+        openTiles = [];
+        openTilesCount = 0;
+      } else {
+        console.log('Tiles do not match. Please try again!');
+
+        openTiles.forEach(function (tile) {
+          setTimeout(function () {
+            tile.classList.toggle('closed');
+
+            openTiles = [];
+            openTilesCount = 0;
+          }, 1000);
+        });
+      }
+    }
   }
 });
 
