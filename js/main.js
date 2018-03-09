@@ -1,5 +1,6 @@
 const boardTiles = document.querySelectorAll('.board-tile');
 const mainBoard = document.querySelector('#main-board');
+const gameInfo = document.querySelector('#game-info');
 const movesCounter = document.querySelector('#moves');
 const playerScore = document.querySelector('#player-score');
 const timer = document.querySelector('#timer');
@@ -104,6 +105,8 @@ function initializeGame() {
 }
 
 function startTimer() {
+  gameInfo.classList.remove('invisible');
+
   startedTimer = setInterval(incrementTimer, 1000);
 
   timer.classList.remove('invisible');

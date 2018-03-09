@@ -46,6 +46,12 @@ body {
   margin: 20px auto;
 }
 
+#game-info {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 #player-score {
   width: 50%;
   text-align: right;
