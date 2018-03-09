@@ -13,8 +13,8 @@ const stopButton = document.querySelector('#stop-button');
 const secondsText = 's';
 const minutesText = 'm';
 const hoursText = 'h';
-const firstStarRemovalTime = 120;
-const secondStarRemovalTime = 210;
+const firstStarRemovalMoves = 20;
+const secondStarRemovalMoves = 35;
 
 const tileIcons = [
   `fa-band-aid`,
@@ -80,6 +80,10 @@ function resetBoard() {
 function increaseMoves() {
   moves++;
   movesCounter.innerText = moves;
+
+  if (moves === firstStarRemovalMoves || moves === secondStarRemovalMoves) {
+    removeStar();
+  }
 }
 
 function initializeGame() {
@@ -129,11 +133,6 @@ function removeStar() {
 function incrementTimer() {
   if (!isPaused) {
     timeElapsed++;
-
-    if (timeElapsed === firstStarRemovalTime || timeElapsed === secondStarRemovalTime) {
-      removeStar();
-    }
-
     time.innerText = timeElapsed.toTimeElapsed();
   }
 }
