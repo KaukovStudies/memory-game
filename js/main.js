@@ -135,7 +135,7 @@ pauseButton.addEventListener('click', toggleTimer);
 playButton.addEventListener('click', toggleTimer);
 
 mainBoard.addEventListener('click', function (e) {
-  if ( (e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) ) {
+  if ( (e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) && !isPaused ) {
     e.target.classList.toggle('closed');
 
     openTiles.push(e.target);
