@@ -13,8 +13,8 @@ const stopButton = document.querySelector('#stop-button');
 const secondsText = 's';
 const minutesText = 'm';
 const hoursText = 'h';
-const firstStarRemovalMoves = 2;
-const secondStarRemovalMoves = 3;
+const firstStarRemovalMoves = 20;
+const secondStarRemovalMoves = 35;
 
 const tileIcons = [
   `fa-band-aid`,
