@@ -4,6 +4,10 @@ const movesCounter = document.querySelector('#moves');
 const playerScore = document.querySelector('#player-score');
 const timer = document.querySelector('#timer');
 const time = document.querySelector('#time-elapsed');
+const resetButton = document.querySelector('#reset-button');
+const pauseButton = document.querySelector('#pause-button');
+const playButton = document.querySelector('#play-button');
+const stopButton = document.querySelector('#stop-button');
 const secondsText = 's';
 const minutesText = 'm';
 const hoursText = 'h';
@@ -29,6 +33,7 @@ let moves = 0;
 let timeStarted;
 let timeElapsed = 0;
 let startedTimer;
+let isPaused = false;
 
 Number.prototype.toTimeElapsed = function () {
     var sec_num = parseInt(this, 10);
@@ -109,10 +114,22 @@ function stopTimer() {
 }
 
 function incrementTimer() {
-  timeElapsed += 1;
-
-  time.innerText = timeElapsed.toTimeElapsed();
+  if (!isPaused) {
+    timeElapsed += 1;
+    time.innerText = timeElapsed.toTimeElapsed();
+  }
 }
+
+function toggleTimer() {
+  isPaused = !isPaused;
+
+  pauseButton.classList.toggle('hidden');
+  playButton.classList.toggle('hidden');
+}
+
+pauseButton.addEventListener('click', toggleTimer);
+
+playButton.addEventListener('click', toggleTimer);
 
 mainBoard.addEventListener('click', function (e) {
   if ( (e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) ) {

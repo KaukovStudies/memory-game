@@ -69,6 +69,18 @@ body {
   margin-left: 15px;
 }
 
+#redo-button { /* */ }
+
+#pause-button {
+  cursor: pointer;
+}
+
+#play-button {
+  cursor: pointer;
+}
+
+#stop-button { /* */ }
+
 /* Page Content */
 #page-content {
   margin: 50px auto;
