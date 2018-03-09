@@ -13,8 +13,8 @@ const stopButton = document.querySelector('#stop-button');
 const secondsText = 's';
 const minutesText = 'm';
 const hoursText = 'h';
-const firstStarRemovalMoves = 20;
-const secondStarRemovalMoves = 35;
+const firstStarRemovalMoves = 2;
+const secondStarRemovalMoves = 3;
 
 const tileIcons = [
   `fa-band-aid`,
@@ -34,10 +34,16 @@ let correctTiles = 0;
 let score = 0; // for future score counting
 let stars = 3;
 let moves = 0;
-let timeStarted;
 let timeElapsed = 0;
 let startedTimer;
 let isPaused = false;
+
+let insertedIcons;
+let icons;
+let numberOfIcons;
+let iconIndex;
+let iconName;
+let newTileIcon;
 
 Number.prototype.toTimeElapsed = function () {
     var sec_num = parseInt(this, 10);
@@ -71,10 +77,29 @@ Number.prototype.toTimeElapsed = function () {
 function resetBoard() {
   // reset all scores and board tile states
   boardTiles.forEach(function (tile) {
-    if (!tile.classList.contains('closed')) {
-      tile.classList.toggle('closed');
-    }
+    tile.classList.add('closed');
+    tile.firstElementChild.remove();
   });
+
+  isPaused = false;
+  moves = 0;
+  stars = 3;
+  score = 0;
+  correctTiles = 0;
+  stopTimer();
+  timeElapsed = 0;
+  openTilesCount = 0;
+  startedTimer = null;
+
+  time.innerText = ''; 
+
+  Array.from(starsDisplay.children).forEach(function (star) {
+    star.classList.remove('hidden');
+  });
+
+  gameInfo.classList.add('invisible');
+
+  initializeGame();
 }
 
 function increaseMoves() {
@@ -87,17 +112,17 @@ function increaseMoves() {
 }
 
 function initializeGame() {
-  const insertedIcons = {};
-  const icons = tileIcons;
+  insertedIcons = {};
+  icons = Array.from(tileIcons);
 
   movesCounter.innerText = moves;
 
   boardTiles.forEach(function (tile) {
-    const numberOfIcons = icons.length > 1 ? icons.length - 1 : 0;
-    const iconIndex = Math.round(Math.random() * numberOfIcons);
-    const iconName = icons[iconIndex];
+    numberOfIcons = icons.length > 1 ? icons.length - 1 : 0;
+    iconIndex = Math.round(Math.random() * numberOfIcons);
+    iconName = icons[iconIndex];
 
-    const newTileIcon = document.createElement('span');
+    newTileIcon = document.createElement('span');
     newTileIcon.classList.add('fa', iconName);
 
     insertedIcons[iconName] = insertedIcons[iconName] === undefined ? 1 : insertedIcons[iconName] + 1;
@@ -107,7 +132,7 @@ function initializeGame() {
     }
 
     tile.appendChild(newTileIcon);
-    tile.classList.toggle('closed');
+    tile.classList.add('closed');
   });
 }
 
@@ -126,7 +151,7 @@ function stopTimer() {
 function removeStar() {
   if (stars > 1) {
     stars--;
-    starsDisplay.firstElementChild.remove();
+    starsDisplay.children[stars - 1].classList.add('hidden');
   }
 }
 
@@ -147,6 +172,8 @@ function toggleTimer() {
 pauseButton.addEventListener('click', toggleTimer);
 
 playButton.addEventListener('click', toggleTimer);
+
+resetButton.addEventListener('click', resetBoard);
 
 mainBoard.addEventListener('click', function (e) {
   if ( (e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) && !isPaused ) {
@@ -197,8 +224,6 @@ mainBoard.addEventListener('click', function (e) {
 });
 
 initializeGame();
-
-clearInterval(startedTimer);
 
 /*
  * TODO:

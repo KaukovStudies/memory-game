@@ -75,7 +75,9 @@ body {
   margin-left: 15px;
 }
 
-#redo-button { /* */ }
+#reset-button {
+  cursor: pointer;
+}
 
 #pause-button {
   cursor: pointer;
