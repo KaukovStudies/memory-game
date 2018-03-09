@@ -1,6 +1,7 @@
 const boardTiles = document.querySelectorAll('.board-tile');
 const mainBoard = document.querySelector('#main-board');
 const gameInfo = document.querySelector('#game-info');
+const starsDisplay = document.querySelector('#stars');
 const movesCounter = document.querySelector('#moves');
 const playerScore = document.querySelector('#player-score');
 const timer = document.querySelector('#timer');
@@ -12,6 +13,8 @@ const stopButton = document.querySelector('#stop-button');
 const secondsText = 's';
 const minutesText = 'm';
 const hoursText = 'h';
+const firstStarRemovalTime = 120;
+const secondStarRemovalTime = 210;
 
 const tileIcons = [
   `fa-band-aid`,
@@ -29,7 +32,7 @@ let openTiles = [];
 
 let correctTiles = 0;
 let score = 0; // for future score counting
-let stars = 3; // for future star counting
+let stars = 3;
 let moves = 0;
 let timeStarted;
 let timeElapsed = 0;
@@ -116,9 +119,21 @@ function stopTimer() {
   clearInterval(startedTimer);
 }
 
+function removeStar() {
+  if (stars > 1) {
+    stars--;
+    starsDisplay.firstElementChild.remove();
+  }
+}
+
 function incrementTimer() {
   if (!isPaused) {
-    timeElapsed += 1;
+    timeElapsed++;
+
+    if (timeElapsed === firstStarRemovalTime || timeElapsed === secondStarRemovalTime) {
+      removeStar();
+    }
+
     time.innerText = timeElapsed.toTimeElapsed();
   }
 }
