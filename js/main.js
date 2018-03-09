@@ -2,6 +2,11 @@ const boardTiles = document.querySelectorAll('.board-tile');
 const mainBoard = document.querySelector('.main-board');
 const movesCounter = document.querySelector('.moves');
 const playerScore = document.querySelector('.player-score');
+const timer = document.querySelector('.timer');
+const time = document.querySelector('.time-elapsed');
+const secondsText = 's';
+const minutesText = 'm';
+const hoursText = 'h';
 
 const tileIcons = [
   `fa-band-aid`,
@@ -21,6 +26,38 @@ let correctTiles = 0;
 let score = 0; // for future score counting
 let stars = 3; // for future star counting
 let moves = 0;
+let timeStarted;
+let timeElapsed = 0;
+let startedTimer;
+
+Number.prototype.toTimeElapsed = function () {
+    var sec_num = parseInt(this, 10);
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (seconds < 10 && minutes > 0) {seconds = "0"+seconds;}
+
+    if (hours === 0) {
+      hours = '';
+    } else {
+      hours = hours + hoursText;
+    }
+
+    if (minutes === 0) {
+      minutes = '';
+    } else {
+      minutes = minutes + minutesText;
+    }
+
+    if (seconds === 0) {
+      seconds = '';
+    } else {
+      seconds = seconds + secondsText;
+    }
+
+    return `${hours} ${minutes} ${seconds}`;
+}
 
 function resetBoard() {
   // reset all scores and board tile states
@@ -61,6 +98,22 @@ function initializeGame() {
   });
 }
 
+function startTimer() {
+  startedTimer = setInterval(incrementTimer, 1000);
+
+  timer.classList.remove('invisible');
+}
+
+function stopTimer() {
+  clearInterval(startedTimer);
+}
+
+function incrementTimer() {
+  timeElapsed += 1;
+
+  time.innerText = timeElapsed.toTimeElapsed();
+}
+
 mainBoard.addEventListener('click', function (e) {
   if ( (e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) ) {
     e.target.classList.toggle('closed');
@@ -72,6 +125,10 @@ mainBoard.addEventListener('click', function (e) {
     openTilesCount++;
 
     if (openTilesCount === 2) {
+      if (!startedTimer) {
+        startTimer();
+      }
+
       let firstTileName = openTiles[0].firstElementChild.classList[1];
       let secondTileName = openTiles[1].firstElementChild.classList[1];
 
@@ -84,7 +141,7 @@ mainBoard.addEventListener('click', function (e) {
 
         if (correctTiles === boardTiles.length / 2) {
           console.log(`You win the game! It took you ${moves} moves`);
-          playerScore.innerText = `You win the game! It took you ${moves} moves`;
+          stopTimer();
         }
 
         openTiles = [];
@@ -106,6 +163,8 @@ mainBoard.addEventListener('click', function (e) {
 });
 
 initializeGame();
+
+clearInterval(startedTimer);
 
 /*
  * TODO:
