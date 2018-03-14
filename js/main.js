@@ -16,6 +16,8 @@ const hoursText = 'h';
 const firstStarRemovalMoves = 20;
 const secondStarRemovalMoves = 35;
 
+const tileIconsToGet = boardTiles.length / 2;
+
 const tileIcons = [
   'fa-band-aid',
   'fa-anchor',
@@ -113,7 +115,8 @@ function increaseMoves() {
 
 function initializeGame() {
   insertedIcons = {};
-  icons = Array.from(tileIcons);
+  // icons = Array.from(tileIcons);
+  icons = tileIcons.slice(0, tileIconsToGet);  // Better suited for different-sized boards
 
   movesCounter.innerText = moves;
 
