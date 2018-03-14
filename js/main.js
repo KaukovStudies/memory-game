@@ -17,14 +17,14 @@ const firstStarRemovalMoves = 20;
 const secondStarRemovalMoves = 35;
 
 const tileIcons = [
-  `fa-band-aid`,
-  `fa-anchor`,
-  `fa-balance-scale`,
-  `fa-arrow-down`,
-  `fa-eye`,
-  `fa-bolt`,
-  `fa-gem`,
-  `fa-basketball-ball`
+  'fa-band-aid',
+  'fa-anchor',
+  'fa-balance-scale',
+  'fa-arrow-down',
+  'fa-eye',
+  'fa-bolt',
+  'fa-gem',
+  'fa-basketball-ball'
 ];
 
 let openTilesCount = 0;
@@ -91,7 +91,7 @@ function resetBoard() {
   openTilesCount = 0;
   startedTimer = null;
 
-  time.innerText = ''; 
+  time.innerText = '';
 
   Array.from(starsDisplay.children).forEach(function (star) {
     star.classList.remove('hidden');
