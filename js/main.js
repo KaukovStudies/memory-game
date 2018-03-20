@@ -16,18 +16,130 @@ const hoursText = 'h';
 const firstStarRemovalMoves = 20;
 const secondStarRemovalMoves = 35;
 
-const tileIconsToGet = boardTiles.length / 2;
-
 const tileIcons = [
-  'fa-band-aid',
-  'fa-anchor',
-  'fa-balance-scale',
-  'fa-arrow-down',
-  'fa-eye',
-  'fa-bolt',
-  'fa-gem',
-  'fa-basketball-ball'
+  "address-book",
+  "align-justify",
+  "american-sign-language-interpreting",
+  "angle-double-right",
+  "angle-right",
+  "arrow-circle-left",
+  "arrow-left",
+  "at",
+  "ban",
+  "baseball-ball",
+  "battery-full",
+  "bed",
+  "bicycle",
+  "bold",
+  "bookmark",
+  "braille",
+  "bullhorn",
+  "calendar",
+  "calendar-plus",
+  "car",
+  "caret-square-down",
+  "caret-up",
+  "chart-area",
+  "check",
+  "chess-bishop",
+  "chess-pawn",
+  "chevron-circle-left",
+  "chevron-left",
+  "circle",
+  "clipboard-list",
+  "cloud",
+  "code-branch",
+  "columns",
+  "compass",
+  "credit-card",
+  "cubes",
+  "desktop",
+  "dolly-flatbed",
+  "eject",
+  "envelope-open",
+  "expand",
+  "eye",
+  "fast-forward",
+  "file",
+  "file-code",
+  "file-powerpoint",
+  "filter",
+  "align-center",
+  "align-right",
+  "anchor",
+  "angle-left",
+  "archive",
+  "arrow-down",
+  "arrow-up",
+  "balance-scale",
+  "barcode",
+  "basketball-ball",
+  "battery-three-quarters",
+  "bell",
+  "binoculars",
+  "book",
+  "box",
+  "briefcase",
+  "calculator",
+  "calendar-check",
+  "calendar-times",
+  "caret-right",
+  "caret-square-right",
+  "cart-arrow-down",
+  "chart-pie",
+  "check-square",
+  "chess-board",
+  "chevron-circle-down",
+  "chevron-circle-up",
+  "chevron-right",
+  "clipboard-check",
+  "clone",
+  "cogs",
+  "compress",
+  "cube",
+  "align-left",
+  "angle-double-down",
+  "arrow-alt-circle-left",
+  "arrow-circle-right",
+  "asterisk",
+  "battery-quarter",
+  "bell-slash",
+  "bowling-ball",
+  "bug",
+  "caret-down",
+  "certificate",
+  "chess-rook",
+  "chevron-down",
+  "clock",
+  "cloud-upload-alt",
+  "crop",
+  "database",
+  "dolly",
+  "envelope-square",
+  "exclamation-circle",
+  "external-link-square-alt",
+  "file-alt",
+  "file-image",
+  "film",
+  "flag",
+  "font",
+  "gamepad",
+  "glass-martini",
+  "hand-lizard",
+  "hand-point-right",
+  "hand-spock",
+  "headphones",
+  "home",
+  "hourglass-half",
+  "band-aid",
+  "bolt",
+  "gem",
+  "basketball-ball",
 ];
+
+const tileIconsToGet = boardTiles.length / 2; // TODO: implement increasing board size
+const tileIconsCount = tileIcons.length;
+let tileIconIndex = 0;
 
 let openTilesCount = 0;
 let openTiles = [];
@@ -47,38 +159,40 @@ let iconIndex;
 let iconName;
 let newTileIcon;
 
-Number.prototype.toTimeElapsed = function () {
-    var sec_num = parseInt(this, 10);
-    var hours   = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+Number.prototype.toTimeElapsed = function() {
+  let parsedTime = parseInt(this, 10);
+  let hours = Math.floor(parsedTime / 3600);
+  let minutes = Math.floor((parsedTime - (hours * 3600)) / 60);
+  let seconds = parsedTime - (hours * 3600) - (minutes * 60);
 
-    if (seconds < 10 && minutes > 0) {seconds = "0"+seconds;}
+  if (hours === 0) {
+    hours = '';
+  } else {
+    hours = hours + hoursText;
+  }
 
-    if (hours === 0) {
-      hours = '';
-    } else {
-      hours = hours + hoursText;
+  if (minutes === 0) {
+    minutes = '';
+  } else {
+    minutes = minutes + minutesText;
+  }
+
+  if (seconds === 0) {
+    seconds = '';
+  } else {
+    if (seconds < 10 && minutes > 0) {
+      seconds = `0${seconds}`;
     }
 
-    if (minutes === 0) {
-      minutes = '';
-    } else {
-      minutes = minutes + minutesText;
-    }
+    seconds += secondsText;
+  }
 
-    if (seconds === 0) {
-      seconds = '';
-    } else {
-      seconds = seconds + secondsText;
-    }
-
-    return `${hours} ${minutes} ${seconds}`;
+  return `${hours} ${minutes} ${seconds}`;
 }
 
 function resetBoard() {
   // reset all scores and board tile states
-  boardTiles.forEach(function (tile) {
+  boardTiles.forEach(function(tile) {
     tile.classList.add('closed');
     tile.firstElementChild.remove();
   });
@@ -95,7 +209,7 @@ function resetBoard() {
 
   time.innerText = '';
 
-  Array.from(starsDisplay.children).forEach(function (star) {
+  Array.from(starsDisplay.children).forEach(function(star) {
     star.classList.remove('hidden');
   });
 
@@ -115,18 +229,18 @@ function increaseMoves() {
 
 function initializeGame() {
   insertedIcons = {};
-  // icons = Array.from(tileIcons);
-  icons = tileIcons.slice(0, tileIconsToGet);  // Better suited for different-sized boards
+  tileIconIndex = Math.round(Math.random() * (tileIconsCount - tileIconsToGet));
+  icons = tileIcons.slice(tileIconIndex, (tileIconIndex + tileIconsToGet));
 
   movesCounter.innerText = moves;
 
-  boardTiles.forEach(function (tile) {
+  boardTiles.forEach(function(tile) {
     numberOfIcons = icons.length > 1 ? icons.length - 1 : 0;
     iconIndex = Math.round(Math.random() * numberOfIcons);
     iconName = icons[iconIndex];
 
     newTileIcon = document.createElement('span');
-    newTileIcon.classList.add('fa', iconName);
+    newTileIcon.classList.add('fa', `fa-${iconName}`);
 
     insertedIcons[iconName] = insertedIcons[iconName] === undefined ? 1 : insertedIcons[iconName] + 1;
 
@@ -178,8 +292,8 @@ playButton.addEventListener('click', toggleTimer);
 
 resetButton.addEventListener('click', resetBoard);
 
-mainBoard.addEventListener('click', function (e) {
-  if ( (e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) && !isPaused ) {
+mainBoard.addEventListener('click', function(e) {
+  if ((e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) && !isPaused) {
     e.target.classList.toggle('closed');
 
     openTiles.push(e.target);
@@ -213,8 +327,8 @@ mainBoard.addEventListener('click', function (e) {
       } else {
         console.log('Tiles do not match. Please try again!');
 
-        openTiles.forEach(function (tile) {
-          setTimeout(function () {
+        openTiles.forEach(function(tile) {
+          setTimeout(function() {
             tile.classList.toggle('closed');
 
             openTiles = [];
