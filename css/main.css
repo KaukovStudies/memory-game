@@ -5,11 +5,11 @@
 }
 
 .invisible {
-  visibility: hidden;
+  visibility: hidden !important;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 body,
@@ -112,6 +112,7 @@ body {
   box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
   cursor: default;
   font-size: 2em;
+  transition: background-color .25s linear;
 }
 
 .board-tile.closed {
@@ -125,6 +126,17 @@ body {
 
 .board-tile:nth-child(n+4) {
   margin-right: 0;
+}
+
+#victory-dialog {
+  min-height: 500px;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  z-index: 99999;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 /* Page Footer */
