@@ -46,6 +46,14 @@ body {
   margin: 20px auto;
 }
 
+#play-info {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: justify;
+  padding: 0 25%;
+}
+
 #game-info {
   width: 100%;
   display: flex;

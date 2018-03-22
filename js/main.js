@@ -1,6 +1,7 @@
 const boardTiles = document.querySelectorAll('.board-tile');
 const mainBoard = document.querySelector('#main-board');
 const gameInfo = document.querySelector('#game-info');
+const playInfo = document.querySelector('#play-info');
 const starsDisplay = document.querySelector('#stars');
 const movesCounter = document.querySelector('#moves');
 const playerScore = document.querySelector('#player-score');
@@ -269,11 +270,12 @@ function initializeGame() {
 }
 
 function startTimer() {
-  gameInfo.classList.remove('invisible');
-
-  startedTimer = setInterval(incrementTimer, 1000);
+  playInfo.classList.add('hidden');
+  gameInfo.classList.remove('hidden');
 
   timer.classList.remove('invisible');
+  startedTimer = setInterval(incrementTimer, 1000);
+
 }
 
 function stopTimer() { clearInterval(startedTimer); }
