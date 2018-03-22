@@ -20,6 +20,7 @@ const tileIcons = [
   "address-book",
   "align-justify",
   "american-sign-language-interpreting",
+
   "angle-double-right",
   "angle-right",
   "arrow-circle-left",
@@ -134,7 +135,7 @@ const tileIcons = [
   "band-aid",
   "bolt",
   "gem",
-  "basketball-ball",
+  "basketball-ball"
 ];
 
 const tileIconsToGet = boardTiles.length / 2; // TODO: implement increasing board size
@@ -350,10 +351,3 @@ resetButton.addEventListener('click', resetBoard);
 mainBoard.addEventListener('click', setUpMainBoard);
 
 initializeGame();
-
-/*
- * TODO:
- * Make a function which renders all board tiles, adds an icon and shuffles them
- * Add dynamic board size selection (bonus)
- * Maybe levels ?! (bonus)
- */
