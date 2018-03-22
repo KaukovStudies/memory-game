@@ -139,18 +139,18 @@ const tileIcons = [
 
 const tileIconsToGet = boardTiles.length / 2; // TODO: implement increasing board size
 const tileIconsCount = tileIcons.length;
-let tileIconIndex = 0;
+let tileIconIndex;
 
-let openTilesCount = 0;
-let openTiles = [];
+let openTilesCount;
+let openTiles;
 
-let correctTiles = 0;
-let score = 0; // for future score counting
-let stars = 3;
-let moves = 0;
-let timeElapsed = 0;
+let correctTiles;
+let score; // for future score counting
+let stars;
+let moves;
+let timeElapsed;
 let startedTimer;
-let isPaused = false;
+let isPaused;
 
 let insertedIcons;
 let icons;
@@ -228,6 +228,15 @@ function increaseMoves() {
 }
 
 function initializeGame() {
+  tileIconIndex = 0;
+  openTilesCount = 0;
+  openTiles = [];
+  correctTiles = 0;
+  score = 0;
+  stars = 3;
+  moves = 0;
+  timeElapsed = 0;
+  isPaused = false;
   insertedIcons = {};
   tileIconIndex = Math.round(Math.random() * (tileIconsCount - tileIconsToGet));
   icons = tileIcons.slice(tileIconIndex, (tileIconIndex + tileIconsToGet));
@@ -261,9 +270,7 @@ function startTimer() {
   timer.classList.remove('invisible');
 }
 
-function stopTimer() {
-  clearInterval(startedTimer);
-}
+function stopTimer() { clearInterval(startedTimer); }
 
 function removeStar() {
   if (stars > 1) {
