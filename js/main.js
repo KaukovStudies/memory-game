@@ -286,13 +286,7 @@ function toggleTimer() {
   playButton.classList.toggle('hidden');
 }
 
-pauseButton.addEventListener('click', toggleTimer);
-
-playButton.addEventListener('click', toggleTimer);
-
-resetButton.addEventListener('click', resetBoard);
-
-mainBoard.addEventListener('click', function(e) {
+function setUpMainBoard(e) {
   if ((e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) && !isPaused) {
     e.target.classList.toggle('closed');
 
@@ -338,7 +332,15 @@ mainBoard.addEventListener('click', function(e) {
       }
     }
   }
-});
+}
+
+pauseButton.addEventListener('click', toggleTimer);
+
+playButton.addEventListener('click', toggleTimer);
+
+resetButton.addEventListener('click', resetBoard);
+
+mainBoard.addEventListener('click', setUpMainBoard);
 
 initializeGame();
 
