@@ -1,5 +1,8 @@
 const boardTiles = document.querySelectorAll('.board-tile');
 const mainBoard = document.querySelector('#main-board');
+const victoryDialog = document.querySelector('#victory-dialog');
+const victoryText = document.querySelector('#victory-text');
+const victoryScore = document.querySelector('#victory-score');
 const gameInfo = document.querySelector('#game-info');
 const playInfo = document.querySelector('#play-info');
 const starsDisplay = document.querySelector('#stars');
@@ -147,7 +150,8 @@ let openTilesCount;
 let openTiles;
 
 let correctTiles;
-let score; // for future score counting
+let calculatedScore;
+let score;
 let stars;
 let moves;
 let timeElapsed;
@@ -199,9 +203,15 @@ function resetBoard() {
     tile.firstElementChild.remove();
   });
 
+  victoryDialog.classList.add('hidden');
+  victoryText.innerText = '';
+  victoryScore.innerText = '';
+  mainBoard.classList.remove('hidden');
+
   isPaused = false;
   moves = 0;
   stars = 3;
+  calculatedScore = 0;
   score = 0;
   correctTiles = 0;
   stopTimer();
@@ -216,10 +226,13 @@ function resetBoard() {
   });
 
   gameInfo.classList.add('invisible');
+  gameInfo.classList.remove('hidden');
 
-  if (pauseButton.classList.contains('hidden')) {
-    playButton.classList.toggle('hidden');
-    pauseButton.classList.toggle('hidden');
+  stopButton.classList.remove('hidden');
+
+  if (pauseButton.classList.contains('hidden') || playButton.classList.conains('hidden')) {
+    playButton.classList.add('hidden');
+    pauseButton.classList.remove('hidden');
   }
 
   initializeGame();
@@ -272,13 +285,20 @@ function initializeGame() {
 function startTimer() {
   playInfo.classList.add('hidden');
   gameInfo.classList.remove('hidden');
+  gameInfo.classList.remove('invisible');
 
   timer.classList.remove('invisible');
   startedTimer = setInterval(incrementTimer, 1000);
 
 }
 
-function stopTimer() { clearInterval(startedTimer); }
+function stopTimer() {
+  clearInterval(startedTimer);
+
+  pauseButton.classList.add('hidden');
+  playButton.classList.add('hidden');
+  stopButton.classList.add('hidden');
+}
 
 function removeStar() {
   if (stars > 1) {
@@ -329,6 +349,12 @@ function setUpMainBoard(e) {
         if (correctTiles === boardTiles.length / 2) {
           console.log(`You win the game! It took you ${moves} moves`);
           stopTimer();
+          calculatedScore = (stars * 3000) - (timeElapsed * 10);
+          score = calculatedScore < 0 ? 0 : calculatedScore;
+          mainBoard.classList.add('hidden');
+          victoryText.innerText = `Congratulations! You won! It took you ${moves} moves, ${timeElapsed.toTimeElapsed()} and you finished with ${stars} stars!`;
+          victoryScore.innerText = `Your final score is ${score}`;
+          victoryDialog.classList.remove('hidden');
         }
 
         openTiles = [];

@@ -133,14 +133,27 @@ body {
 }
 
 #victory-dialog {
-  min-height: 500px;
   width: 100%;
-  background-color: #000;
-  color: #fff;
-  z-index: 99999;
+  min-height: 300px;
   display: flex;
   flex-wrap: wrap;
+  text-align: center;
   align-items: center;
+  justify-content: center;
+  background-color: rgba(10, 10, 10, 0.6);
+  border-radius: 10px;
+  color: #fff;
+  z-index: 9999;
+}
+
+#victory-text {
+  width: 100%;
+}
+
+#victory-score {
+  width: 75%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* Page Footer */
