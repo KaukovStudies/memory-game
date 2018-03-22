@@ -216,6 +216,11 @@ function resetBoard() {
 
   gameInfo.classList.add('invisible');
 
+  if (pauseButton.classList.contains('hidden')) {
+    playButton.classList.toggle('hidden');
+    pauseButton.classList.toggle('hidden');
+  }
+
   initializeGame();
 }
 
