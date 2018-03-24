@@ -14,11 +14,7 @@
     <header id="page-header">
       <h1 id="game-title">Memory Game</h1>
 
-      <section id="play-info">
-        <p>To start the game just start flipping tiles. The goal of the game is to match tiles in pairs of 2. You win then you match all tiles. Good luck!</p>
-      </section>
-
-      <section id="game-info" class="hidden">
+      <section id="game-info" class="invisible">
         <section id="player-score">
           <div id="timer" class="invisible">
             Time elapsed: <span id="time-elapsed"></span>
@@ -43,7 +39,7 @@
       </section>
     </header>
 
-    <main id="page-content">
+    <main id="page-content" class="invisible">
       <section id="main-board">
         <span class="board-tile"></span>
         <span class="board-tile"></span>
@@ -62,11 +58,6 @@
         <span class="board-tile"></span>
         <span class="board-tile"></span>
       </section>
-
-      <div id="victory-dialog" class="hidden">
-        <section id="victory-text"></section>
-        <section id="victory-score"></section>
-      </div>
     </main>
 
     <footer id="page-footer">
@@ -74,6 +65,23 @@
         Copyright &copy; 2018 Peter Kaukov &lt;<a href="mailto:peter.kaukov@gmail.com">peter.kaukov@gmail.com</a>&gt;
       </span>
     </footer>
+  </div>
+
+  <div id="modal">
+    <div id="modal-content">
+      <div id="intro-screen">
+        <p id="intro-text">
+          To start the game just start flipping tiles. The goal of the game is to match tiles in pairs of 2. You win then you match all tiles. Good luck!
+        </p>
+        <span id="start-game-button" class="fa fa-play"></span>
+      </div>
+
+      <div id="victory-screen" class="hidden">
+        <section id="victory-text"></section>
+        <section id="victory-score"></section>
+        <span id="restart-game-button" class="fa fa-redo"></span>
+      </div>
+    </div>
   </div>
 
   <script src="js/main.js"></script>

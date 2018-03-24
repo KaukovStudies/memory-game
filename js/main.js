@@ -1,10 +1,10 @@
+const pageContent = document.querySelector('#page-content');
 const boardTiles = document.querySelectorAll('.board-tile');
 const mainBoard = document.querySelector('#main-board');
 const victoryDialog = document.querySelector('#victory-dialog');
 const victoryText = document.querySelector('#victory-text');
 const victoryScore = document.querySelector('#victory-score');
 const gameInfo = document.querySelector('#game-info');
-const playInfo = document.querySelector('#play-info');
 const starsDisplay = document.querySelector('#stars');
 const movesCounter = document.querySelector('#moves');
 const playerScore = document.querySelector('#player-score');
@@ -14,6 +14,11 @@ const resetButton = document.querySelector('#reset-button');
 const pauseButton = document.querySelector('#pause-button');
 const playButton = document.querySelector('#play-button');
 const stopButton = document.querySelector('#stop-button');
+const startGameButton = document.querySelector('#start-game-button');
+const restartGameButton = document.querySelector('#restart-game-button');
+const modal = document.querySelector('#modal');
+const introScreen = document.querySelector('#intro-screen');
+const victoryScreen = document.querySelector('#victory-screen');
 const secondsText = 's';
 const minutesText = 'm';
 const hoursText = 'h';
@@ -142,7 +147,7 @@ const tileIcons = [
   "basketball-ball"
 ];
 
-const tileIconsToGet = boardTiles.length / 2; // TODO: implement increasing board size
+const tileIconsToGet = boardTiles.length / 2;
 const tileIconsCount = tileIcons.length;
 let tileIconIndex;
 
@@ -197,15 +202,18 @@ Number.prototype.toTimeElapsed = function() {
 }
 
 function resetBoard() {
+  showModal();
+  hidePageContent();
   // reset all scores and board tile states
   boardTiles.forEach(function(tile) {
     tile.classList.add('closed');
     tile.firstElementChild.remove();
   });
 
-  victoryDialog.classList.add('hidden');
+  victoryScreen.classList.add('hidden');
   victoryText.innerText = '';
   victoryScore.innerText = '';
+  introScreen.classList.remove('hidden');
   mainBoard.classList.remove('hidden');
 
   isPaused = false;
@@ -283,7 +291,6 @@ function initializeGame() {
 }
 
 function startTimer() {
-  playInfo.classList.add('hidden');
   gameInfo.classList.remove('hidden');
   gameInfo.classList.remove('invisible');
 
@@ -303,7 +310,7 @@ function stopTimer() {
 function removeStar() {
   if (stars > 1) {
     stars--;
-    starsDisplay.children[stars - 1].classList.add('hidden');
+    starsDisplay.children[stars - 1].classList.add('hidden'); // TODO: test with invisible class
   }
 }
 
@@ -342,26 +349,23 @@ function setUpMainBoard(e) {
       increaseMoves();
 
       if (firstTileName === secondTileName) {
-        console.log('Tiles match. Congratulations!');
-
         correctTiles++;
 
         if (correctTiles === boardTiles.length / 2) {
-          console.log(`You win the game! It took you ${moves} moves`);
           stopTimer();
           calculatedScore = (stars * 3000) - (timeElapsed * 10);
           score = calculatedScore < 0 ? 0 : calculatedScore;
-          mainBoard.classList.add('hidden');
+          modal.classList.add('transparent-dark-bg')
+          showModal();
+          introScreen.classList.add('hidden');
           victoryText.innerText = `Congratulations! You won! It took you ${moves} moves, ${timeElapsed.toTimeElapsed()} and you finished with ${stars} stars!`;
           victoryScore.innerText = `Your final score is ${score}`;
-          victoryDialog.classList.remove('hidden');
+          victoryScreen.classList.remove('hidden');
         }
 
         openTiles = [];
         openTilesCount = 0;
       } else {
-        console.log('Tiles do not match. Please try again!');
-
         openTiles.forEach(function(tile) {
           setTimeout(function() {
             tile.classList.toggle('closed');
@@ -375,12 +379,56 @@ function setUpMainBoard(e) {
   }
 }
 
+function showModal() {
+  modal.classList.add('slideup');
+  modal.classList.remove('hidden');
+
+  setTimeout(function() {
+    modal.classList.remove('slideup');
+  }, 3000);
+}
+
+function hideModal() {
+  modal.classList.add('slidedown');
+
+  setTimeout(function() {
+    modal.classList.add('hidden');
+    modal.classList.remove('slidedown');
+  }, 3000);
+}
+
+function showPageContent() {
+  pageContent.classList.add('fadein');
+  pageContent.classList.remove('invisible');
+
+  setTimeout(function() {
+    pageContent.classList.remove('fadein');
+  }, 3000);
+}
+
+function hidePageContent() {
+  pageContent.classList.add('fadeout');
+
+  setTimeout(function() {
+    pageContent.classList.add('invisible');
+    pageContent.classList.remove('fadeout');
+  }, 3000);
+}
+
 pauseButton.addEventListener('click', toggleTimer);
 
 playButton.addEventListener('click', toggleTimer);
 
 resetButton.addEventListener('click', resetBoard);
 
+restartGameButton.addEventListener('click', resetBoard);
+
 mainBoard.addEventListener('click', setUpMainBoard);
+
+startGameButton.addEventListener('click', function(e) {
+  hideModal();
+  showPageContent();
+  startTimer();
+});
 
 initializeGame();
