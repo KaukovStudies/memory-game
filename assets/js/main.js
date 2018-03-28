@@ -222,8 +222,13 @@ function handleWindowFocusChange() {
 }
 
 function resetBoard() {
-  showModal();
-  hidePageContent();
+  if (score == 0) {
+    showModal();
+    hidePageContent();
+  } else {
+    hideModal();
+  }
+
   // reset all scores and board tile states
   boardTiles.forEach(function(tile) {
     tile.classList.add('closed');
