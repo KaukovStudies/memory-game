@@ -13,7 +13,6 @@ const time = document.querySelector('#time-elapsed');
 const resetButton = document.querySelector('#reset-button');
 const pauseButton = document.querySelector('#pause-button');
 const playButton = document.querySelector('#play-button');
-const stopButton = document.querySelector('#stop-button');
 const startGameButton = document.querySelector('#start-game-button');
 const restartGameButton = document.querySelector('#restart-game-button');
 const modal = document.querySelector('#modal');
@@ -261,8 +260,6 @@ function resetBoard() {
   gameInfo.classList.add('invisible');
   gameInfo.classList.remove('hidden');
 
-  stopButton.classList.remove('hidden');
-
   if (pauseButton.classList.contains('hidden') || playButton.classList.conains('hidden')) {
     playButton.classList.add('hidden');
     pauseButton.classList.remove('hidden');
@@ -329,7 +326,6 @@ function stopTimer() {
 
   pauseButton.classList.add('hidden');
   playButton.classList.add('hidden');
-  stopButton.classList.add('hidden');
 }
 
 function removeStar() {
