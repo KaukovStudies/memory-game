@@ -29,7 +29,6 @@ const tileIcons = [
   "address-book",
   "align-justify",
   "american-sign-language-interpreting",
-
   "angle-double-right",
   "angle-right",
   "arrow-circle-left",
