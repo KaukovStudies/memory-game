@@ -404,47 +404,76 @@ function setUpMainBoard(e) {
   }
 }
 
-function clearAnimationTriggers() {
-  clearTimeout(showModalTrigger);
-  clearTimeout(hideModalTrigger);
-  clearTimeout(showContentTrigger);
-  clearTimeout(hideContentTrigger);
-}
-
 function showModal() {
+  if (showContentTrigger) {
+    clearTimeout(showContentTrigger);
+  }
+
+  if (hideModalTrigger) {
+    modal.classList.remove('slidedown');
+    clearTimeout(hideModalTrigger);
+  }
+
   modal.classList.add('slideup');
-  modal.classList.remove('hidden');
+  modal.classList.remove('hidden', 'invisible');
 
   showModalTrigger = setTimeout(function() {
     modal.classList.remove('slideup');
-  }, 3000);
+  }, 1500);
 }
 
 function hideModal() {
+  if (hideContentTrigger) {
+    clearTimeout(hideContentTrigger);
+  }
+
+  if (showModalTrigger) {
+    modal.classList.remove('slideup');
+    clearTimeout(showModalTrigger);
+  }
+
   modal.classList.add('slidedown');
 
   hideModalTrigger = setTimeout(function() {
     modal.classList.add('hidden');
     modal.classList.remove('slidedown');
-  }, 3000);
+  }, 1500);
 }
 
 function showPageContent() {
+  if (hideContentTrigger) {
+    pageContent.classList.remove('fadeout');
+    clearTimeout(hideContentTrigger);
+  }
+
+  if (showModalTrigger) {
+    clearTimeout(showModalTrigger);
+  }
+
   pageContent.classList.add('fadein');
-  pageContent.classList.remove('invisible');
+  pageContent.classList.remove('invisible', 'hidden');
 
   showContentTrigger = setTimeout(function() {
     pageContent.classList.remove('fadein');
-  }, 3000);
+  }, 1500);
 }
 
 function hidePageContent() {
+  if (showContentTrigger) {
+    pageContent.classList.remove('fadein');
+    clearTimeout(showContentTrigger);
+  }
+
+  if (hideModal) {
+    clearTimeout(hideModal);
+  }
+
   pageContent.classList.add('fadeout');
 
   hideContentTrigger = setTimeout(function() {
     pageContent.classList.add('invisible');
     pageContent.classList.remove('fadeout');
-  }, 3000);
+  }, 1500);
 }
 
 pauseButton.addEventListener('click', toggleTimer);
