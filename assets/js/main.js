@@ -169,6 +169,11 @@ let iconIndex;
 let iconName;
 let newTileIcon;
 
+let showModalTrigger;
+let hideModalTrigger;
+let showContentTrigger;
+let hideContentTrigger;
+
 Number.prototype.toTimeElapsed = function() {
   let parsedTime = parseInt(this, 10);
   let hours = Math.floor(parsedTime / 3600);
@@ -378,11 +383,18 @@ function setUpMainBoard(e) {
   }
 }
 
+function clearAnimationTriggers() {
+  clearTimeout(showModalTrigger);
+  clearTimeout(hideModalTrigger);
+  clearTimeout(showContentTrigger);
+  clearTimeout(hideContentTrigger);
+}
+
 function showModal() {
   modal.classList.add('slideup');
   modal.classList.remove('hidden');
 
-  setTimeout(function() {
+  showModalTrigger = setTimeout(function() {
     modal.classList.remove('slideup');
   }, 3000);
 }
@@ -390,7 +402,7 @@ function showModal() {
 function hideModal() {
   modal.classList.add('slidedown');
 
-  setTimeout(function() {
+  hideModalTrigger = setTimeout(function() {
     modal.classList.add('hidden');
     modal.classList.remove('slidedown');
   }, 3000);
@@ -400,7 +412,7 @@ function showPageContent() {
   pageContent.classList.add('fadein');
   pageContent.classList.remove('invisible');
 
-  setTimeout(function() {
+  showContentTrigger = setTimeout(function() {
     pageContent.classList.remove('fadein');
   }, 3000);
 }
@@ -408,7 +420,7 @@ function showPageContent() {
 function hidePageContent() {
   pageContent.classList.add('fadeout');
 
-  setTimeout(function() {
+  hideContentTrigger = setTimeout(function() {
     pageContent.classList.add('invisible');
     pageContent.classList.remove('fadeout');
   }, 3000);
