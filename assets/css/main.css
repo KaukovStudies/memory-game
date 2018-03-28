@@ -197,6 +197,10 @@ body {
     margin: 5px;
     padding: 30px 15px;
   }
+
+  #modal-content {
+    padding: 0 10px;
+  }
 }
 
 @media screen and (max-width: 450px) {
