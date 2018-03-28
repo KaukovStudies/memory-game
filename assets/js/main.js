@@ -389,7 +389,7 @@ function gameWon() {
 function hideOpenTiles() {
   openTiles.forEach(function(tile) {
     setTimeout(function() {
-      tile.classList.toggle('closed');
+      tile.classList.add('closed');
 
       openTiles = [];
       openTilesCount = 0;
