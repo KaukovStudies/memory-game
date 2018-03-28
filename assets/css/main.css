@@ -14,22 +14,22 @@
 
 .slidedown {
   animation-name: slidedown;
-  animation-duration: 3s;
+  animation-duration: 1.5s;
 }
 
 .slideup {
   animation-name: slideup;
-  animation-duration: 3s;
+  animation-duration: 1.5s;
 }
 
 .fadeout {
   animation-name: fadeout;
-  animation-duration: 3s;
+  animation-duration: 1.5s;
 }
 
 .fadein {
   animation-name: fadein;
-  animation-duration: 3s;
+  animation-duration: 1.5s;
 }
 
 .transparent-dark-bg {
@@ -244,19 +244,23 @@ body {
 @keyframes fadein {
   from {
     opacity: 0;
+    visibility: hidden;
   }
 
   to {
     opacity: 1;
+    visibility: visible;
   }
 }
 
 @keyframes fadeout {
   from {
     opacity: 1;
+    visibility: visible;
   }
 
   to {
     opacity: 0;
+    visibility: hidden;
   }
 }
