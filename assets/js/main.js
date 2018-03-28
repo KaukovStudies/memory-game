@@ -147,36 +147,32 @@ const tileIcons = [
 
 const tileIconsToGet = boardTiles.length / 2;
 const tileIconsCount = tileIcons.length;
-let tileIconIndex;
 
-let openTilesCount;
-let openTiles;
-
-let correctTiles;
-let calculatedScore;
-let score;
-let stars;
-let moves;
-let timeElapsed;
-let startedTimer;
-let isPaused;
-
-let insertedIcons;
-let icons;
-let numberOfIcons;
-let iconIndex;
-let iconName;
-let newTileIcon;
-
-let showModalTrigger;
-let hideModalTrigger;
-let showContentTrigger;
-let hideContentTrigger;
+let tileIconIndex,
+    openTilesCount,
+    openTiles,
+    correctTiles,
+    calculatedScore,
+    score,
+    stars,
+    moves,
+    timeElapsed,
+    startedTimer,
+    isPaused,
+    insertedIcons,
+    icons,
+    numberOfIcons,
+    iconIndex,
+    iconName,
+    newTileIcon,
+    showModalTrigger,
+    hideModalTrigger,
+    showContentTrigger,
+    hideContentTrigger,
+    hidden,
+    visibilityChange;
 
 // Taken from MDN
-let hidden;
-let visibilityChange;
-
 if (typeof document.hidden !== "undefined") {
   hidden = "hidden";
   visibilityChange = "visibilitychange";
