@@ -221,7 +221,7 @@ Number.prototype.toTimeElapsed = function() {
 }
 
 function handleWindowFocusChange() {
-  if (startedTimer) {
+  if (startedTimer && !isPaused) {
     toggleTimer();
   }
 }
