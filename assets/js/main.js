@@ -221,52 +221,41 @@ function handleWindowFocusChange() {
   }
 }
 
-function resetBoard() {
-  if (score == 0) {
-    showModal();
+function resetBoard(e) {
+  stopTimer();
+
+  if (e.target.id == 'reset-button') {
     hidePageContent();
+    showModal();
   } else {
     hideModal();
   }
 
-  // reset all scores and board tile states
+  resetVariables();
+  clearAllTiles();
+  resetTextDisplays();
+  resetStars();
+  resetPlayPauseButtons();
+}
+
+function clearAllTiles() {
   boardTiles.forEach(function(tile) {
     tile.classList.add('closed');
     tile.firstElementChild.remove();
   });
+}
 
-  victoryScreen.classList.add('hidden');
-  victoryText.innerText = '';
-  victoryScore.innerText = '';
-  introScreen.classList.remove('hidden');
-  mainBoard.classList.remove('hidden');
-
-  isPaused = false;
-  moves = 0;
-  stars = 3;
-  calculatedScore = 0;
-  score = 0;
-  correctTiles = 0;
-  stopTimer();
-  timeElapsed = 0;
-  openTilesCount = 0;
-  startedTimer = null;
-
-  time.innerText = '';
-
+function resetStars() {
   Array.from(starsDisplay.children).forEach(function(star) {
     star.classList.remove('hidden');
   });
+}
 
-  gameInfo.classList.add('invisible');
-  gameInfo.classList.remove('hidden');
-
+function resetPlayPauseButtons() {
   if (pauseButton.classList.contains('hidden') || playButton.classList.conains('hidden')) {
     playButton.classList.add('hidden');
     pauseButton.classList.remove('hidden');
   }
-
-  initializeGame();
 }
 
 function increaseMoves() {
@@ -278,7 +267,7 @@ function increaseMoves() {
   }
 }
 
-function initializeGame() {
+function resetVariables() {
   tileIconIndex = 0;
   openTilesCount = 0;
   openTiles = [];
@@ -289,10 +278,22 @@ function initializeGame() {
   timeElapsed = 0;
   isPaused = false;
   insertedIcons = {};
+  calculatedScore = 0;
+  startedTimer = null;
+}
+
+function resetTextDisplays() {
+  victoryScreen.classList.add('hidden');
+  victoryText.innerText = '';
+  victoryScore.innerText = '';
+  introScreen.classList.remove('hidden');
+  movesCounter.innerText = moves;
+  time.innerText = '';
+}
+
+function initializeTiles() {
   tileIconIndex = Math.round(Math.random() * (tileIconsCount - tileIconsToGet));
   icons = tileIcons.slice(tileIconIndex, (tileIconIndex + tileIconsToGet));
-
-  movesCounter.innerText = moves;
 
   boardTiles.forEach(function(tile) {
     numberOfIcons = icons.length > 1 ? icons.length - 1 : 0;
@@ -314,7 +315,25 @@ function initializeGame() {
 }
 
 function startGame() {
-  // TODO: move all the logic for starting the game here
+  if (!modal.classList.contains('hidden')) {
+    hideModal();
+  }
+
+  if (pageContent.classList.contains('invisible')) {
+    showPageContent();
+  }
+
+  resetVariables();
+  initializeTiles();
+  startTimer();
+}
+
+function resetGame(e) {
+  resetBoard(e);
+
+  if (e.target.id == 'restart-game-button') {
+    startGame();
+  }
 }
 
 function startTimer() {
@@ -405,8 +424,7 @@ function openTile(tile) {
   openTilesCount++;
 }
 
-// TODO: change the function's name
-function setUpMainBoard(e) {
+function handleTileClick(e) {
   if ((e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) && !isPaused) {
     openTile(e.target);
 
@@ -427,7 +445,7 @@ function showModal() {
   }
 
   modal.classList.add('slideup');
-  modal.classList.remove('hidden', 'invisible');
+  modal.classList.remove('hidden');
 
   showModalTrigger = setTimeout(function() {
     modal.classList.remove('slideup');
@@ -455,6 +473,7 @@ function hideModal() {
 function showPageContent() {
   if (hideContentTrigger) {
     pageContent.classList.remove('fadeout');
+    gameInfo.classList.remove('fadeout');
     clearTimeout(hideContentTrigger);
   }
 
@@ -463,16 +482,20 @@ function showPageContent() {
   }
 
   pageContent.classList.add('fadein');
+  gameInfo.classList.add('fadein');
   pageContent.classList.remove('invisible', 'hidden');
+  gameInfo.classList.remove('invisible', 'hidden');
 
   showContentTrigger = setTimeout(function() {
     pageContent.classList.remove('fadein');
+    gameInfo.classList.remove('fadein');
   }, 1500);
 }
 
 function hidePageContent() {
   if (showContentTrigger) {
     pageContent.classList.remove('fadein');
+    gameInfo.classList.remove('fadein');
     clearTimeout(showContentTrigger);
   }
 
@@ -481,10 +504,13 @@ function hidePageContent() {
   }
 
   pageContent.classList.add('fadeout');
+  gameInfo.classList.add('fadeout');
 
   hideContentTrigger = setTimeout(function() {
     pageContent.classList.add('invisible');
+    gameInfo.classList.add('invisible');
     pageContent.classList.remove('fadeout');
+    gameInfo.classList.remove('fadeout');
   }, 1500);
 }
 
@@ -492,18 +518,12 @@ pauseButton.addEventListener('click', toggleTimer);
 
 playButton.addEventListener('click', toggleTimer);
 
-resetButton.addEventListener('click', resetBoard);
+resetButton.addEventListener('click', resetGame);
 
-restartGameButton.addEventListener('click', resetBoard);
+restartGameButton.addEventListener('click', resetGame);
 
-mainBoard.addEventListener('click', setUpMainBoard);
+mainBoard.addEventListener('click', handleTileClick);
 
-startGameButton.addEventListener('click', function(e) {
-  hideModal();
-  showPageContent();
-  startTimer();
-});
+startGameButton.addEventListener('click', startGame);
 
 document.addEventListener(visibilityChange, handleWindowFocusChange);
-
-initializeGame();
