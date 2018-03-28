@@ -295,7 +295,7 @@ function initializeGame() {
     iconName = icons[iconIndex];
 
     newTileIcon = document.createElement('span');
-    newTileIcon.classList.add('fa', `fa-${iconName}`);
+    newTileIcon.classList.add('fa', 'fa-' + iconName);
 
     insertedIcons[iconName] = insertedIcons[iconName] === undefined ? 1 : insertedIcons[iconName] + 1;
 
@@ -314,7 +314,6 @@ function startTimer() {
 
   timer.classList.remove('invisible');
   startedTimer = setInterval(incrementTimer, 1000);
-
 }
 
 function stopTimer() {
