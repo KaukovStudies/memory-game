@@ -169,6 +169,21 @@ let iconIndex;
 let iconName;
 let newTileIcon;
 
+// Taken from MDN
+let hidden;
+let visibilityChange;
+
+if (typeof document.hidden !== "undefined") {
+  hidden = "hidden";
+  visibilityChange = "visibilitychange";
+} else if (typeof document.msHidden !== "undefined") {
+  hidden = "msHidden";
+  visibilityChange = "msvisibilitychange";
+} else if (typeof document.webkitHidden !== "undefined") {
+  hidden = "webkitHidden";
+  visibilityChange = "webkitvisibilitychange";
+}
+
 Number.prototype.toTimeElapsed = function() {
   let parsedTime = parseInt(this, 10);
   let hours = Math.floor(parsedTime / 3600);
@@ -198,6 +213,12 @@ Number.prototype.toTimeElapsed = function() {
   }
 
   return `${hours} ${minutes} ${seconds}`;
+}
+
+function handleWindowFocusChange() {
+  if (startedTimer) {
+    toggleTimer();
+  }
 }
 
 function resetBoard() {
@@ -429,5 +450,7 @@ startGameButton.addEventListener('click', function(e) {
   showPageContent();
   startTimer();
 });
+
+document.addEventListener(visibilityChange, handleWindowFocusChange);
 
 initializeGame();
