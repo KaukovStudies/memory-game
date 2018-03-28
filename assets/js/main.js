@@ -173,15 +173,15 @@ let tileIconIndex,
     visibilityChange;
 
 // Taken from MDN
-if (typeof document.hidden !== "undefined") {
-  hidden = "hidden";
-  visibilityChange = "visibilitychange";
-} else if (typeof document.msHidden !== "undefined") {
+if (typeof document.msHidden !== "undefined") {
   hidden = "msHidden";
   visibilityChange = "msvisibilitychange";
 } else if (typeof document.webkitHidden !== "undefined") {
   hidden = "webkitHidden";
   visibilityChange = "webkitvisibilitychange";
+} else {
+  hidden = "hidden";
+  visibilityChange = "visibilitychange";
 }
 
 Number.prototype.toTimeElapsed = function() {
