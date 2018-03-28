@@ -313,6 +313,10 @@ function initializeGame() {
   });
 }
 
+function startGame() {
+  // TODO: move all the logic for starting the game here
+}
+
 function startTimer() {
   gameInfo.classList.remove('hidden');
   gameInfo.classList.remove('invisible');
@@ -349,53 +353,65 @@ function toggleTimer() {
   playButton.classList.toggle('hidden');
 }
 
+function compareTiles() {
+  let firstTileName = openTiles[0].firstElementChild.classList[1];
+  let secondTileName = openTiles[1].firstElementChild.classList[1];
+
+  increaseMoves();
+
+  if (firstTileName === secondTileName) {
+    correctTiles++;
+
+    if (correctTiles === boardTiles.length / 2) {
+      gameWon();
+    }
+
+    openTiles = [];
+    openTilesCount = 0;
+  } else {
+    hideOpenTiles();
+  }
+}
+
+function gameWon() {
+  stopTimer();
+  calculatedScore = (stars * 3000) - (timeElapsed * 10);
+  score = calculatedScore < 0 ? 0 : calculatedScore;
+  modal.classList.add('transparent-dark-bg')
+  showModal();
+  introScreen.classList.add('hidden');
+  // TODO: remove ES6 string literals for IE compatibility
+  victoryText.innerText = `Congratulations! You won! It took you ${moves} moves, ${timeElapsed.toTimeElapsed()} and you finished with ${stars} stars!`;
+  victoryScore.innerText = `Your final score is ${score}`;
+  victoryScreen.classList.remove('hidden');
+}
+
+function hideOpenTiles() {
+  openTiles.forEach(function(tile) {
+    setTimeout(function() {
+      tile.classList.toggle('closed');
+
+      openTiles = [];
+      openTilesCount = 0;
+    }, 1000);
+  });
+}
+
+function openTile(tile) {
+  tile.classList.toggle('closed');
+
+  openTiles.push(tile);
+
+  openTilesCount++;
+}
+
+// TODO: change the function's name
 function setUpMainBoard(e) {
   if ((e.target.classList.contains('closed')) && (openTiles.length === 0 || openTiles.length === 1) && !isPaused) {
-    e.target.classList.toggle('closed');
-
-    openTiles.push(e.target);
-
-    let tileIcon = e.target.firstElementChild.classList[1];
-
-    openTilesCount++;
+    openTile(e.target);
 
     if (openTilesCount === 2) {
-      if (!startedTimer) {
-        startTimer();
-      }
-
-      let firstTileName = openTiles[0].firstElementChild.classList[1];
-      let secondTileName = openTiles[1].firstElementChild.classList[1];
-
-      increaseMoves();
-
-      if (firstTileName === secondTileName) {
-        correctTiles++;
-
-        if (correctTiles === boardTiles.length / 2) {
-          stopTimer();
-          calculatedScore = (stars * 3000) - (timeElapsed * 10);
-          score = calculatedScore < 0 ? 0 : calculatedScore;
-          modal.classList.add('transparent-dark-bg')
-          showModal();
-          introScreen.classList.add('hidden');
-          victoryText.innerText = `Congratulations! You won! It took you ${moves} moves, ${timeElapsed.toTimeElapsed()} and you finished with ${stars} stars!`;
-          victoryScore.innerText = `Your final score is ${score}`;
-          victoryScreen.classList.remove('hidden');
-        }
-
-        openTiles = [];
-        openTilesCount = 0;
-      } else {
-        openTiles.forEach(function(tile) {
-          setTimeout(function() {
-            tile.classList.toggle('closed');
-
-            openTiles = [];
-            openTilesCount = 0;
-          }, 1000);
-        });
-      }
+      compareTiles();
     }
   }
 }
