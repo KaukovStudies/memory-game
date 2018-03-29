@@ -206,13 +206,13 @@ Number.prototype.toTimeElapsed = function() {
     seconds = '';
   } else {
     if (seconds < 10 && minutes > 0) {
-      seconds = `0${seconds}`;
+      seconds = '0' + seconds;
     }
 
     seconds += secondsText;
   }
 
-  return `${hours} ${minutes} ${seconds}`;
+  return hours + ' ' + minutes + ' ' + seconds;
 }
 
 function handleWindowFocusChange() {
@@ -407,9 +407,8 @@ function gameWon() {
   score = calculatedScore < 0 ? 0 : calculatedScore;
   showModal();
   introScreen.classList.add('hidden');
-  // TODO: remove ES6 string literals for IE compatibility
-  victoryText.innerText = `Congratulations! You won! It took you ${moves} moves, ${timeElapsed.toTimeElapsed()} and you finished with ${stars} stars!`;
-  victoryScore.innerText = `Your final score is ${score}`;
+  victoryText.innerText = 'Congratulations! You won! It took you ' + moves + ' moves, ' + timeElapsed.toTimeElapsed() + ' and you finished with ' + stars + ' stars!';
+  victoryScore.innerText = 'Your final score is ' + score;
   victoryScreen.classList.remove('hidden');
 }
 
