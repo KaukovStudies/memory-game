@@ -32,8 +32,26 @@
   animation-duration: 1.5s;
 }
 
-.transparent-dark-bg {
-  background-color: rgba(0, 0, 0, 0.4);
+.shake {
+  animation-name: shake;
+  animation-duration: 0.82s;
+  animation-timing-function: cubic-bezier(.36,.07,.19,.97);
+  animation-fill-mode: both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  background-color: #9f0000 !important;
+}
+
+.bounce {
+  animation-name: bounce;
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(.36,.07,.19,.97);
+  animation-fill-mode: both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  background-color: #00a415 !important;
 }
 
 body,
@@ -111,11 +129,13 @@ body {
 #pause-button,
 #play-button,
 #stop-button,
-#start-game-button {
+#start-game-button,
+#restart-game-button {
   cursor: pointer;
 }
 
-#start-game-button {
+#start-game-button,
+#restart-game-button {
   font-size: 2em;
   margin: 20px;
 }
@@ -138,7 +158,7 @@ body {
 .board-tile {
   width: 22.5555%;
   border-radius: 10px;
-  background-color: honeydew;
+  background-color: #fff;
   margin: 10px;
   padding: 50px 15px;
   box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
@@ -183,6 +203,14 @@ body {
 #modal-content {
   max-width: 500px;
   text-align: center;
+}
+
+#intro-screen,
+#victory-screen {
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 @media screen and (max-width: 1000px) {
@@ -262,5 +290,29 @@ body {
   to {
     opacity: 0;
     visibility: hidden;
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translateX(-1px);
+  }
+
+  20%, 80% {
+    transform: translateX(2px);
+  }
+
+  30%, 50%, 70% {
+    transform: translateX(-4px);
+  }
+
+  40%, 60% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateY(-5px);
   }
 }

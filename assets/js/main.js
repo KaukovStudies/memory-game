@@ -240,6 +240,7 @@ function resetBoard(e) {
 
 function clearAllTiles() {
   boardTiles.forEach(function(tile) {
+    tile.classList.remove('bounce');
     tile.classList.add('closed');
     tile.firstElementChild.remove();
   });
@@ -381,6 +382,10 @@ function compareTiles() {
   if (firstTileName === secondTileName) {
     correctTiles++;
 
+    openTiles.forEach(function(tile) {
+      tile.classList.add('bounce');
+    });
+
     if (correctTiles === boardTiles.length / 2) {
       gameWon();
     }
@@ -388,6 +393,10 @@ function compareTiles() {
     openTiles = [];
     openTilesCount = 0;
   } else {
+    openTiles.forEach(function(tile) {
+      tile.classList.add('shake');
+    });
+
     hideOpenTiles();
   }
 }
@@ -396,7 +405,6 @@ function gameWon() {
   stopTimer();
   calculatedScore = (stars * 3000) - (timeElapsed * 10);
   score = calculatedScore < 0 ? 0 : calculatedScore;
-  modal.classList.add('transparent-dark-bg')
   showModal();
   introScreen.classList.add('hidden');
   // TODO: remove ES6 string literals for IE compatibility
@@ -409,6 +417,7 @@ function hideOpenTiles() {
   openTiles.forEach(function(tile) {
     setTimeout(function() {
       tile.classList.add('closed');
+      tile.classList.remove('shake');
 
       openTiles = [];
       openTilesCount = 0;
