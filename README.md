@@ -12,6 +12,11 @@ You can contribute by opening an issue on a problem/bug you found, or opening a
 pull request for me to merge something you think can be improved.  
 All feedback is welcome!
 
+Background Image
+================
+
+The background image was taken from [https://pixabay.com/en/grey-pattern-seamless-geometrical-2715737/](https://pixabay.com/en/grey-pattern-seamless-geometrical-2715737/)
+
 # License
 
 [Licensed under MIT](LICENSE)
