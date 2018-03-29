@@ -1,17 +1,16 @@
-# Memory Game
----
-Table of Contents:
-  - 1
-    - 1.1
-  - 2
-    - 2.1
-    - 2.2
-    - 2.3
-  - 3
-  - 4
-    - 4.1
-    - 4.2
-  - 5
+Memory Game
+===========
+
+This is my take on a Memory Game project for Udacity's Front-End Web Developer Nanodegree.  
+The game's logic can be found in `assets/js/main.js`. The whole game is written in HTML, CSS and JS.  
+Enjoy!
+
+Contributing
+=====================
+
+You can contribute by opening an issue on a problem/bug you found, or opening a
+pull request for me to merge something you think can be improved.  
+All feedback is welcome!
 
 # License
 
